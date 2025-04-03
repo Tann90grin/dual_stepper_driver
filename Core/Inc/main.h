@@ -71,26 +71,34 @@ void Error_Handler(void);
 #define SPREAD_B_GPIO_Port GPIOB
 #define INDEX_B_Pin GPIO_PIN_2
 #define INDEX_B_GPIO_Port GPIOB
-#define DIAG_B_Pin GPIO_PIN_10
-#define DIAG_B_GPIO_Port GPIOB
-#define VBUS_EN_Pin GPIO_PIN_13
-#define VBUS_EN_GPIO_Port GPIOA
-#define INDEX_A_Pin GPIO_PIN_15
-#define INDEX_A_GPIO_Port GPIOA
+#define DIAG_B_IN_Pin GPIO_PIN_10
+#define DIAG_B_IN_GPIO_Port GPIOB
+#define UART_SEL_Pin GPIO_PIN_12
+#define UART_SEL_GPIO_Port GPIOB
+#define DIAG_A_OUT_Pin GPIO_PIN_13
+#define DIAG_A_OUT_GPIO_Port GPIOB
+#define DIAG_B_OUT_Pin GPIO_PIN_15
+#define DIAG_B_OUT_GPIO_Port GPIOB
+#define SWDIO_Pin GPIO_PIN_13
+#define SWDIO_GPIO_Port GPIOA
+#define SWCLK_Pin GPIO_PIN_14
+#define SWCLK_GPIO_Port GPIOA
+#define STEP_A_Pin GPIO_PIN_15
+#define STEP_A_GPIO_Port GPIOA
 #define MS1_A_Pin GPIO_PIN_3
 #define MS1_A_GPIO_Port GPIOB
 #define MS2_A_Pin GPIO_PIN_4
 #define MS2_A_GPIO_Port GPIOB
-#define STEP_A_Pin GPIO_PIN_5
-#define STEP_A_GPIO_Port GPIOB
+#define INDEX_A_Pin GPIO_PIN_5
+#define INDEX_A_GPIO_Port GPIOB
 #define DIR_A_Pin GPIO_PIN_6
 #define DIR_A_GPIO_Port GPIOB
 #define STDBY_A_Pin GPIO_PIN_7
 #define STDBY_A_GPIO_Port GPIOB
 #define SPREAD_A_Pin GPIO_PIN_8
 #define SPREAD_A_GPIO_Port GPIOB
-#define DIAG_A_Pin GPIO_PIN_9
-#define DIAG_A_GPIO_Port GPIOB
+#define DIAG_A_IN_Pin GPIO_PIN_9
+#define DIAG_A_IN_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
 

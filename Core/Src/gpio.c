@@ -51,17 +51,17 @@ void MX_GPIO_Init(void)
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOA, MS1_B_Pin|MS2_B_Pin|STEP_B_Pin|DIR_B_Pin
-                          |VBUS_EN_Pin|INDEX_A_Pin, GPIO_PIN_RESET);
+                          |SWDIO_Pin|STEP_A_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, STDBY_B_Pin|SPREAD_B_Pin|INDEX_B_Pin|DIAG_B_Pin
-                          |MS1_A_Pin|MS2_A_Pin|STEP_A_Pin|DIR_A_Pin
-                          |STDBY_A_Pin|SPREAD_A_Pin|DIAG_A_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, STDBY_B_Pin|SPREAD_B_Pin|UART_SEL_Pin|DIAG_A_OUT_Pin
+                          |DIAG_B_OUT_Pin|MS1_A_Pin|MS2_A_Pin|DIR_A_Pin
+                          |STDBY_A_Pin|SPREAD_A_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pins : PAPin PAPin PAPin PAPin
                            PAPin PAPin */
   GPIO_InitStruct.Pin = MS1_B_Pin|MS2_B_Pin|STEP_B_Pin|DIR_B_Pin
-                          |VBUS_EN_Pin|INDEX_A_Pin;
+                          |SWDIO_Pin|STEP_A_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -69,14 +69,26 @@ void MX_GPIO_Init(void)
 
   /*Configure GPIO pins : PBPin PBPin PBPin PBPin
                            PBPin PBPin PBPin PBPin
-                           PBPin PBPin PBPin */
-  GPIO_InitStruct.Pin = STDBY_B_Pin|SPREAD_B_Pin|INDEX_B_Pin|DIAG_B_Pin
-                          |MS1_A_Pin|MS2_A_Pin|STEP_A_Pin|DIR_A_Pin
-                          |STDBY_A_Pin|SPREAD_A_Pin|DIAG_A_Pin;
+                           PBPin PBPin */
+  GPIO_InitStruct.Pin = STDBY_B_Pin|SPREAD_B_Pin|UART_SEL_Pin|DIAG_A_OUT_Pin
+                          |DIAG_B_OUT_Pin|MS1_A_Pin|MS2_A_Pin|DIR_A_Pin
+                          |STDBY_A_Pin|SPREAD_A_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : PBPin PBPin PBPin PBPin */
+  GPIO_InitStruct.Pin = INDEX_B_Pin|DIAG_B_IN_Pin|INDEX_A_Pin|DIAG_A_IN_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : PtPin */
+  GPIO_InitStruct.Pin = SWCLK_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(SWCLK_GPIO_Port, &GPIO_InitStruct);
 
 }
 
