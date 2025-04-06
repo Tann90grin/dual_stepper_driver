@@ -34,7 +34,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
+#define USB_BUFLEN 128
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -43,9 +43,13 @@
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
-
 /* USER CODE BEGIN PV */
+uint8_t usbTxBuf[USB_BUFLEN];
+uint16_t usbTxBufLen;
 
+uint8_t usbRxBuf[USB_BUFLEN];
+uint16_t usbRxBufLen;
+uint8_t usbRxFlag = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -56,7 +60,12 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+void USB_RXCallback(uint8_t *buf, uint32_t *len)
+{
+	memcpy(usbRxBuf, buf, *len);
+	usbRxBufLen = *len;
+	usbRxFlag = 1;
+}
 /* USER CODE END 0 */
 
 /**
