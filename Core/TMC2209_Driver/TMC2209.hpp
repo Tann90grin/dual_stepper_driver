@@ -51,7 +51,7 @@ class TMC2209{
 	public:
 	TMC2209(GPIO_TypeDef *port0, uint16_t ad0, GPIO_TypeDef *port1, uint16_t ad1, uint8_t addr, UART_HandleTypeDef *huart);
 	void write(uint8_t reg, uint32_t data);
-	uint32_t request(uint8_t reg);
+	uint32_t read(uint8_t reg);
 
 	private:
 	typedef	struct
@@ -83,6 +83,9 @@ class TMC2209{
 	datagram64 writeDatagram(uint8_t reg, uint32_t data);
 	datagram32 requestDatagram(uint8_t reg);
 	uint32_t requestData(datagram64 datagram);
+	void request(uint8_t reg);
+	datagram64 reply();
+	uint32_t replyData(datagram64 datagram);
 	uint32_t reverse(uint32_t data);
 	UART_HandleTypeDef *huart;
 	uint8_t addr;
