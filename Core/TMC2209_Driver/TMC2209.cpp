@@ -30,10 +30,18 @@ void TMC2209::write(uint8_t reg, uint32_t data)
 	HAL_UART_Transmit(this->huart, datagram.data, datagram.len, HAL_MAX_DELAY);
 }
 
-uint32_t TMC2209::request(uint8_t reg)
+void TMC2209::request(uint8_t reg)
 {
 	datagram32 datagram = readDatagram(reg);
 	HAL_UART_Transmit(this->huart, datagram.data, datagram.len, HAL_MAX_DELAY);
+}
+
+uint32_t TMC2209::read(uint8_t reg)
+{
+	request(reg);
+	datagram64 datagram;
+	HAL_UART_Receive(this->huart, datagram.data, datagram.len, HAL_MAX_DELAY);
+	return readData(datagram);
 }
 
 datagram64 TMC2209::writeDatagram(uint8_t reg, uint32_t data)
@@ -57,7 +65,7 @@ datagram32 TMC2209::requestDatagram(uint8_t reg)
 	return datagram;
 }
 
-uint32_t TMC2209::requestData(datagram64 datagram)
+uint32_t TMC2209::readData(datagram64 datagram)
 {
 	uint32_t data;
 	uint8_t crc;
@@ -107,5 +115,61 @@ void TMC2209::swuart_calcCRC(uint8_t* datagram, uint8_t datagramLength)
 	} // for message byte
 }
 
+void writeGCONF(uint32_t data)
+{
+	write(ADDRESS_GCONF, data);
+}
 
+void writeIHOLD_IRUN(uint32_t data)
+{
+	write(ADDRESS_IHOLD_IRUN, data);
+}
+void writeCHOPCONF(uint32_t data)
+{
+	write(ADDRESS_CHOPCONF, data);
+}
+void writePWMCONF(uint32_t data)
+{
+	write(ADDRESS_PWMCONF, data);
+}
+
+void writeCOOLCONF(uint32_t data)
+{
+	write(ADDRESS_COOLCONF, data);
+}
+
+void writeTCOOLTHRS(uint32_t data)
+{
+	write(ADDRESS_TCOOLTHRS, data);
+}
+
+void writeTPWMTHRS(uint32_t data)
+{
+	write(ADDRESS_TPWMTHRS, data);
+}
+
+void writeSGTHRS(uint32_t data)
+{
+	write(ADDRESS_SGTHRS, data);
+}
+
+void writeTPOWERDOWN(uint32_t data)
+{
+	write(ADDRESS_TPOWERDOWN, data);
+}
+
+uint32_t readIOIN()
+{
+	return read(ADDRESS_IOIN);
+}
+
+uint32_t readSG_RESULT()
+{
+	return read(ADDRESS_SG_RESULT);
+}
+
+uint32_t readIFCNT()
+{
+	return read(ADDRESS_IFCNT);
+}
 
