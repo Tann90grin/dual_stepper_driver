@@ -29,6 +29,12 @@ void TMC2209::write(uint8_t reg, uint32_t data)
 	datagram64 datagram = writeDatagram(reg + 0x80, data);
 	HAL_UART_Transmit(this->huart, datagram.data, datagram.len, HAL_MAX_DELAY);
 }
+uint32_t TMC2209::read(uint8_t reg)
+{
+	request(reg);
+	datagram64 datagram = reply();
+	return replyData(datagram);
+}
 
 void TMC2209::request(uint8_t reg)
 {
@@ -36,12 +42,21 @@ void TMC2209::request(uint8_t reg)
 	HAL_UART_Transmit(this->huart, datagram.data, datagram.len, HAL_MAX_DELAY);
 }
 
-uint32_t TMC2209::read(uint8_t reg)
+datagram64 TMC2209::reply()
 {
-	request(reg);
 	datagram64 datagram;
 	HAL_UART_Receive(this->huart, datagram.data, datagram.len, HAL_MAX_DELAY);
-	return readData(datagram);
+	return datagram;
+}
+
+uint32_t TMC2209::replyData(datagram64 datagram)
+{
+	uint32_t res;
+	for(uint8_t i = 0; i < 4; i++)
+	{
+		res |= datagram.data[i] << ((3 - i) * 8);
+	}
+	return res;
 }
 
 datagram64 TMC2209::writeDatagram(uint8_t reg, uint32_t data)
@@ -73,7 +88,8 @@ uint32_t TMC2209::readData(datagram64 datagram)
 	memcpy(datagram.data + 3, data, 4);
 	crc = datagram.data[7];
 	swuart_calcCRC(datagram.data, datagram.len);
-	if(crc != datagram.data[7]){
+	if(crc != datagram.data[7])
+	{
 		return UINT32_MAX;
 	}
 	return reverse(data);
