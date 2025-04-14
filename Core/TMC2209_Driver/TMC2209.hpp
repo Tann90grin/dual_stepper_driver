@@ -90,7 +90,6 @@ class TMC2209{
 	datagram64 writeDatagram(uint8_t reg, uint32_t data);
 	datagram32 requestDatagram(uint8_t reg);
 	uint32_t readData(datagram64 datagram);
-	void request(uint8_t reg);
 	datagram64 reply();
 	uint32_t replyData(datagram64 datagram);
 	uint32_t reverse(uint32_t data);
