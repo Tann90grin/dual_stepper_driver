@@ -9,6 +9,8 @@
 #define INC_TMC2209_HPP_
 
 #include "stm32f4xx_hal.h"
+#include "TMC2209_Reg.hpp"
+#include <string.h>
 
 //Sync byte
 constexpr uint8_t SYNC = 0x0005;
@@ -57,11 +59,6 @@ typedef	struct
 	uint8_t len = 8;
 }datagram64;
 
-typedef struct
-{
-
-};
-
 class TMC2209{
 	public:
 	TMC2209(GPIO_TypeDef *port0, uint16_t ad0, GPIO_TypeDef *port1, uint16_t ad1, uint8_t addr, UART_HandleTypeDef *huart);
@@ -93,8 +90,14 @@ class TMC2209{
 	datagram64 reply();
 	uint32_t replyData(datagram64 datagram);
 	uint32_t reverse(uint32_t data);
+
 	UART_HandleTypeDef *huart;
 	uint8_t addr;
+	TMC2209_REG reg = TMC2209_REG_DEFAULT;
+	uint16_t SG_RESULT; // READ
+	uint8_t SGTHRS;     // WRITE
+	uint8_t TPOWERDOWN; // WRITE
+	uint8_t IFCNT; 		// READ
 };
 
 #endif /* INC_TMC2209_HPP_ */

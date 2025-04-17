@@ -1,0 +1,25 @@
+../Core/TMC2209_Driver/TMC2209.cpp:10:1:TMC2209::TMC2209(GPIO_TypeDef*, uint16_t, GPIO_TypeDef*, uint16_t, uint8_t, UART_HandleTypeDef*)	24	static
+../Core/TMC2209_Driver/TMC2209.cpp:27:6:void TMC2209::write(uint8_t, uint32_t)	40	static
+../Core/TMC2209_Driver/TMC2209.cpp:32:10:uint32_t TMC2209::read(uint8_t)	32	static
+../Core/TMC2209_Driver/TMC2209.cpp:39:6:void TMC2209::request(uint8_t)	24	static
+../Core/TMC2209_Driver/TMC2209.hpp:60:2:datagram64::datagram64()	16	static
+../Core/TMC2209_Driver/TMC2209.cpp:45:12:datagram64 TMC2209::reply()	16	static
+../Core/TMC2209_Driver/TMC2209.cpp:52:10:uint32_t TMC2209::replyData(datagram64)	32	static
+../Core/TMC2209_Driver/TMC2209.cpp:62:12:datagram64 TMC2209::writeDatagram(uint8_t, uint32_t)	32	static
+../Core/TMC2209_Driver/TMC2209.hpp:48:2:datagram32::datagram32()	16	static
+../Core/TMC2209_Driver/TMC2209.cpp:74:12:datagram32 TMC2209::requestDatagram(uint8_t)	24	static
+../Core/TMC2209_Driver/TMC2209.cpp:84:10:uint32_t TMC2209::readData(datagram64)	32	static
+../Core/TMC2209_Driver/TMC2209.cpp:99:10:uint32_t TMC2209::reverse(uint32_t)	24	static
+../Core/TMC2209_Driver/TMC2209.cpp:113:6:void TMC2209::swuart_calcCRC(uint8_t*, uint8_t)	40	static
+../Core/TMC2209_Driver/TMC2209.cpp:135:6:void TMC2209::writeGCONF(uint32_t)	16	static
+../Core/TMC2209_Driver/TMC2209.cpp:141:6:void TMC2209::writeIHOLD_IRUN(uint32_t)	16	static
+../Core/TMC2209_Driver/TMC2209.cpp:147:6:void TMC2209::writeCHOPCONF(uint32_t)	16	static
+../Core/TMC2209_Driver/TMC2209.cpp:152:6:void TMC2209::writePWMCONF(uint32_t)	16	static
+../Core/TMC2209_Driver/TMC2209.cpp:158:6:void TMC2209::writeCOOLCONF(uint32_t)	16	static
+../Core/TMC2209_Driver/TMC2209.cpp:164:6:void TMC2209::writeTCOOLTHRS(uint32_t)	16	static
+../Core/TMC2209_Driver/TMC2209.cpp:170:6:void TMC2209::writeTPWMTHRS(uint32_t)	16	static
+../Core/TMC2209_Driver/TMC2209.cpp:176:6:void TMC2209::writeSGTHRS(uint32_t)	16	static
+../Core/TMC2209_Driver/TMC2209.cpp:182:6:void TMC2209::writeTPOWERDOWN(uint32_t)	16	static
+../Core/TMC2209_Driver/TMC2209.cpp:188:10:uint32_t TMC2209::readIOIN()	24	static
+../Core/TMC2209_Driver/TMC2209.cpp:195:10:uint32_t TMC2209::readSG_RESULT()	24	static
+../Core/TMC2209_Driver/TMC2209.cpp:202:10:uint32_t TMC2209::readIFCNT()	24	static

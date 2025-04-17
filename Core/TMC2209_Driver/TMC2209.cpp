@@ -38,7 +38,7 @@ uint32_t TMC2209::read(uint8_t reg)
 
 void TMC2209::request(uint8_t reg)
 {
-	datagram32 datagram = readDatagram(reg);
+	datagram32 datagram = requestDatagram(reg);
 	HAL_UART_Transmit(this->huart, datagram.data, datagram.len, HAL_MAX_DELAY);
 }
 
@@ -65,7 +65,8 @@ datagram64 TMC2209::writeDatagram(uint8_t reg, uint32_t data)
     datagram.data[0] = SYNC;
     datagram.data[1] = this->addr;
     datagram.data[2] = reg;
-    memcpy(datagram.data + 3, reverse(data), 4);
+    uint32_t rev_data = reverse(data);
+    memcpy(datagram.data + 3, &rev_data, 4);
     swuart_calcCRC(datagram.data, datagram.len);
     return datagram;
 }
@@ -82,10 +83,10 @@ datagram32 TMC2209::requestDatagram(uint8_t reg)
 
 uint32_t TMC2209::readData(datagram64 datagram)
 {
-	uint32_t data;
+	uint32_t data = 0x0000;
 	uint8_t crc;
 
-	memcpy(datagram.data + 3, data, 4);
+	memcpy(datagram.data + 3, &data, 4);
 	crc = datagram.data[7];
 	swuart_calcCRC(datagram.data, datagram.len);
 	if(crc != datagram.data[7])
@@ -131,61 +132,77 @@ void TMC2209::swuart_calcCRC(uint8_t* datagram, uint8_t datagramLength)
 	} // for message byte
 }
 
-void writeGCONF(uint32_t data)
+void TMC2209::writeGCONF(uint32_t data)
 {
+	this->reg.GCONF.data = data;
 	write(ADDRESS_GCONF, data);
 }
 
-void writeIHOLD_IRUN(uint32_t data)
+void TMC2209::writeIHOLD_IRUN(uint32_t data)
 {
+	this->reg.IHOLD_IRUN.data = data;
 	write(ADDRESS_IHOLD_IRUN, data);
 }
-void writeCHOPCONF(uint32_t data)
+
+void TMC2209::writeCHOPCONF(uint32_t data)
 {
+	this->reg.CHOPCONF.data = data;
 	write(ADDRESS_CHOPCONF, data);
 }
-void writePWMCONF(uint32_t data)
+void TMC2209::writePWMCONF(uint32_t data)
 {
+	this->reg.PWMCONF.data = data;
 	write(ADDRESS_PWMCONF, data);
 }
 
-void writeCOOLCONF(uint32_t data)
+void TMC2209::writeCOOLCONF(uint32_t data)
 {
+	this->reg.COOLCONF.data = data;
 	write(ADDRESS_COOLCONF, data);
 }
 
-void writeTCOOLTHRS(uint32_t data)
+void TMC2209::writeTCOOLTHRS(uint32_t data)
 {
+	this->reg.TCOOLTHRS.data = data;
 	write(ADDRESS_TCOOLTHRS, data);
 }
 
-void writeTPWMTHRS(uint32_t data)
+void TMC2209::writeTPWMTHRS(uint32_t data)
 {
+	this->reg.TPWMTHRS.data = data;
 	write(ADDRESS_TPWMTHRS, data);
 }
 
-void writeSGTHRS(uint32_t data)
+void TMC2209::writeSGTHRS(uint32_t data)
 {
+	this->SGTHRS = data;
 	write(ADDRESS_SGTHRS, data);
 }
 
-void writeTPOWERDOWN(uint32_t data)
+void TMC2209::writeTPOWERDOWN(uint32_t data)
 {
+	this->TPOWERDOWN = data;
 	write(ADDRESS_TPOWERDOWN, data);
 }
 
-uint32_t readIOIN()
+uint32_t TMC2209::readIOIN()
 {
-	return read(ADDRESS_IOIN);
+	uint32_t data = read(ADDRESS_IOIN);
+	this->reg.IOIN.data = data;
+	return data;
 }
 
-uint32_t readSG_RESULT()
+uint32_t TMC2209::readSG_RESULT()
 {
-	return read(ADDRESS_SG_RESULT);
+	uint32_t data = read(ADDRESS_SG_RESULT);
+	this->SG_RESULT = data;
+	return data;
 }
 
-uint32_t readIFCNT()
+uint32_t TMC2209::readIFCNT()
 {
-	return read(ADDRESS_IFCNT);
+	uint32_t data = read(ADDRESS_IFCNT);
+	this->IFCNT = data;
+	return data;
 }
 
