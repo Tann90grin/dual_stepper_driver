@@ -5,7 +5,9 @@
  *      Author: Henry
  */
 
-//https://github.com/creapunk/TMC2209-UART/blob/main/src/TMC2209_REG.h
+/*
+ * Reference: https://github.com/creapunk/TMC2209-UART/blob/main/src/TMC2209_REG.h
+ */
 
 #pragma once
 

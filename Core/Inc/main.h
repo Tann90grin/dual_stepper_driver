@@ -61,8 +61,6 @@ void Error_Handler(void);
 #define MS1_B_GPIO_Port GPIOA
 #define MS2_B_Pin GPIO_PIN_5
 #define MS2_B_GPIO_Port GPIOA
-#define STEP_B_Pin GPIO_PIN_6
-#define STEP_B_GPIO_Port GPIOA
 #define DIR_B_Pin GPIO_PIN_7
 #define DIR_B_GPIO_Port GPIOA
 #define STDBY_B_Pin GPIO_PIN_0
@@ -83,8 +81,6 @@ void Error_Handler(void);
 #define SWDIO_GPIO_Port GPIOA
 #define SWCLK_Pin GPIO_PIN_14
 #define SWCLK_GPIO_Port GPIOA
-#define STEP_A_Pin GPIO_PIN_15
-#define STEP_A_GPIO_Port GPIOA
 #define MS1_A_Pin GPIO_PIN_3
 #define MS1_A_GPIO_Port GPIOB
 #define MS2_A_Pin GPIO_PIN_4

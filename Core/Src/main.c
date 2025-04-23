@@ -18,13 +18,14 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "tim.h"
 #include "usart.h"
 #include "usb_device.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "TMC2209.hpp"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -43,6 +44,7 @@
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
+
 /* USER CODE BEGIN PV */
 uint8_t usbTxBuf[USB_BUFLEN];
 uint16_t usbTxBufLen;
@@ -50,6 +52,9 @@ uint16_t usbTxBufLen;
 uint8_t usbRxBuf[USB_BUFLEN];
 uint16_t usbRxBufLen;
 uint8_t usbRxFlag = 0;
+
+
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -76,7 +81,8 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-
+	TMC2209 motorA(GPIOB, MS1_A_Pin, GPIOB, MS1_B_Pin, 0x00, &huart1);
+	TMC2209 motorB(GPIOA, MS2_A_Pin, GPIOA, MS2_B_Pin, 0x01, &huart1);
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -100,8 +106,14 @@ int main(void)
   MX_USART1_UART_Init();
   MX_USART2_UART_Init();
   MX_USB_DEVICE_Init();
+  MX_TIM2_Init();
+  MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
-
+  //50kHz
+  __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, 0.05 * 480);
+  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
+  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 0.05 * 480);
+  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
   /* USER CODE END 2 */
 
   /* Infinite loop */
