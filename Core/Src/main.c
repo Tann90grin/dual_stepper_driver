@@ -36,6 +36,7 @@
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 #define USB_BUFLEN 128
+#define INTERNAL_CLK 16000000
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -53,14 +54,13 @@ uint8_t usbRxBuf[USB_BUFLEN];
 uint16_t usbRxBufLen;
 uint8_t usbRxFlag = 0;
 
-
-
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 /* USER CODE BEGIN PFP */
-
+uint32_t rpm_to_counter_period(int rpm);
+void set_direction(uint8_t addr);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -109,10 +109,10 @@ int main(void)
   MX_TIM2_Init();
   MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
-  //50kHz
-  __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, 0.05 * 480);
+  //Default 50kHz
+  __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, 0.05 * 320);
   HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
-  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 0.05 * 480);
+  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 0.05 * 320);
   HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
   /* USER CODE END 2 */
 
@@ -175,7 +175,32 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
+uint32_t rpm_to_counter_period(int rpm)
+{
+	uint32_t step_freq = (uint32_t)(rpm * 200 * 16 / 60);
+	uint32_t period = (INTERNAL_CLK / step_freq) - 1;
+	return period;
+}
 
+void set_direction(uint8_t addr, uint8_t dir)
+{
+	GPIO_PinState output;
+	if(dir){
+		output = GPIO_PIN_SET;
+	}else{
+		output = GPIO_PIN_RESET;
+	}
+	switch(addr){
+		case 0x00:
+			HAl_GPIO_WritePin(GPIOB, DIR_A_Pin, output);
+			break;
+		case 0x01:
+			HAl_GPIO_WritePin(GPIOA, DIR_B_Pin, output);
+			break;
+		default:
+			break;
+	}
+}
 /* USER CODE END 4 */
 
 /**
